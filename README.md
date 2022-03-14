@@ -5,10 +5,9 @@ Anyone can  apply for a domain name, the owner checks if the name is available, 
 
 ## ARCHITECTURE
 - A name registering service - primary
-- a list of ens names available- primary
 - Guide against Forerunning attack - secondary
 - Unregistered name can be registered for a certain time by locking a balance of the account. - primary
-- After the registration expires, the account loses ownership of the name and the balance is unlocked. - meduium
+- After the registration expires, the account loses ownership of the name and the balance is unlocked. - medium
 - The registration can be renewed by making an onchain call to keep the name registered and balance unlocked. - medium
 - Reasonable defaults for the locking period and amount - primary
 - The fee to register the name depends on the size of the name. - primary

@@ -24,6 +24,11 @@ contract NameRegisteringService is Ownable {
         uint256 expires;
     }
 
+    struct accountBalance {
+        uint256 balance;
+        uint256 releaseTime;
+    }
+
     /** CONSTANTS */
     uint256 public constant DOMAIN_NAME_COST = 1 ether;
     uint256 public constant DOMAIN_NAME_COST_SHORT_ADDITION = 1 ether;
@@ -32,11 +37,14 @@ contract NameRegisteringService is Ownable {
     uint8 public constant DOMAIN_NAME_EXPENSIVE_LENGTH = 8;
     uint8 public constant TOP_LEVEL_DOMAIN_MIN_LENGTH = 1;
     bytes1 public constant BYTES_DEFAULT_VALUE = bytes1(0x00);
+    uint256 public constant timeLocked = 1678798831000;
 
-    /** STATE VARIABLES */
+    /** Mappings */
     mapping(bytes32 => DomainDetails) public domainNames;
     mapping(address => bytes32[]) public paymentReceipts;
     mapping(bytes32 => Receipt) public receiptDetails;
+    mapping (address => uint256) public balances;
+    mapping (address =>  accountBalance) accountBalances;
 
     /**
      * MODIFIERS
@@ -80,6 +88,8 @@ contract NameRegisteringService is Ownable {
         );
         _;
     }
+
+    // modifier balance
 
     /**
      *  EVENTS
@@ -148,27 +158,19 @@ contract NameRegisteringService is Ownable {
         isAvailable(domain, topLevel)
         collectDomainNamePayment(domain)
     {
+        uint256 amount = msg.value;
+
         // calculate the domain hash
         bytes32 domainHash = getDomainHash(domain, topLevel);
 
         // create a new domain entry with the provided fn parameters
-        DomainDetails memory newDomain = DomainDetails({
-            name: domain,
-            topLevel: topLevel,
-            owner: msg.sender,
-            ip: ip,
-            expires: block.timestamp + DOMAIN_EXPIRATION_DATE
-        });
+        DomainDetails memory newDomain = DomainDetails(domain, topLevel, msg.sender, ip, block.timestamp + DOMAIN_EXPIRATION_DATE);
 
         // save the domain to the storage
         domainNames[domainHash] = newDomain;
 
         // create an receipt entry for this domain purchase
-        Receipt memory newReceipt = Receipt({
-            amountPaidWei: DOMAIN_NAME_COST,
-            timestamp: block.timestamp,
-            expires: block.timestamp + DOMAIN_EXPIRATION_DATE
-        });
+        Receipt memory newReceipt = Receipt(DOMAIN_NAME_COST, block.timestamp, block.timestamp + DOMAIN_EXPIRATION_DATE);
 
         // calculate the receipt hash/key
         bytes32 receiptKey = getReceiptKey(domain, topLevel);
@@ -209,11 +211,7 @@ contract NameRegisteringService is Ownable {
         domainNames[domainHash].expires += 365 days;
 
         // create a receipt entity
-        Receipt memory newReceipt = Receipt({
-            amountPaidWei: DOMAIN_NAME_COST,
-            timestamp: block.timestamp,
-            expires: block.timestamp + DOMAIN_EXPIRATION_DATE
-        });
+        Receipt memory newReceipt = Receipt(DOMAIN_NAME_COST, block.timestamp, block.timestamp + DOMAIN_EXPIRATION_DATE);
 
         // calculate the receipt key for this domain
         bytes32 receiptKey = getReceiptKey(domain, topLevel);
