@@ -1,4 +1,4 @@
-const NameRegisteringService = artifacts.require("NameRegisteringService.sol");
+const NameRegisteringService = artifacts.require("NameRegisteringService");
 
 const assertRevert = require("./utils/assertRevert");
 const watchEvent = require("./utils/watchEvent");
