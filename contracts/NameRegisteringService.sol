@@ -24,10 +24,10 @@ contract NameRegisteringService is Ownable {
         uint256 expires;
     }
 
-    struct accountBalance {
-        uint256 balance;
-        uint256 releaseTime;
-    }
+    // struct accountBalance {
+    //     uint256 balance;
+    //     uint256 releaseTime;
+    // }
 
     /** CONSTANTS */
     uint256 public constant DOMAIN_NAME_COST = 1 ether;
@@ -44,7 +44,7 @@ contract NameRegisteringService is Ownable {
     mapping(address => bytes32[]) public paymentReceipts;
     mapping(bytes32 => Receipt) public receiptDetails;
     mapping(address => uint256) public balances;
-    mapping(address => accountBalance) accountBalances;
+    // mapping(address => accountBalance) accountBalances;
 
     /**
      * MODIFIERS

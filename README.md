@@ -31,7 +31,7 @@ Anyone can  apply for a domain name, the owner checks if the name is available, 
     - uint expires — expiring time
 
 # Modifiers
-    - isAvailable modifier checks whether a certain domain name is available to be bought.
+- isAvailable modifier checks whether a certain domain name is available to be bought.
     - collectDomainNamePayments modifier is used as the way for faster check if the user provided the right amount of money for the payment.
     - isDomainOwner modifier checks whether the transaction initiator (msg.sender) is the owner of the certain domain.
     - isDomainOwner modifier checks whether the transaction initiator (msg.sender) is the owner of the certain domain.
