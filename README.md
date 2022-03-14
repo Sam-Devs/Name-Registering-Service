@@ -3,9 +3,6 @@
 ## SCENARIO - ENS System
 Anyone can  apply for a domain name, the owner checks if the name is available, if it is, the applicant pays a fee and the the domain ownership shifts to him, there is an expiry timestamp, if the user doesnt renew by then, the name expires and he loses ownership.
 
-
-
-
 ## ARCHITECTURE
 - A name registering service - primary
 - a list of ens names available- primary
