@@ -43,8 +43,8 @@ contract NameRegisteringService is Ownable {
     mapping(bytes32 => DomainDetails) public domainNames;
     mapping(address => bytes32[]) public paymentReceipts;
     mapping(bytes32 => Receipt) public receiptDetails;
-    mapping (address => uint256) public balances;
-    mapping (address =>  accountBalance) accountBalances;
+    mapping(address => uint256) public balances;
+    mapping(address => accountBalance) accountBalances;
 
     /**
      * MODIFIERS
@@ -164,13 +164,23 @@ contract NameRegisteringService is Ownable {
         bytes32 domainHash = getDomainHash(domain, topLevel);
 
         // create a new domain entry with the provided fn parameters
-        DomainDetails memory newDomain = DomainDetails(domain, topLevel, msg.sender, ip, block.timestamp + DOMAIN_EXPIRATION_DATE);
+        DomainDetails memory newDomain = DomainDetails(
+            domain,
+            topLevel,
+            msg.sender,
+            ip,
+            block.timestamp + DOMAIN_EXPIRATION_DATE
+        );
 
         // save the domain to the storage
         domainNames[domainHash] = newDomain;
 
         // create an receipt entry for this domain purchase
-        Receipt memory newReceipt = Receipt(DOMAIN_NAME_COST, block.timestamp, block.timestamp + DOMAIN_EXPIRATION_DATE);
+        Receipt memory newReceipt = Receipt(
+            DOMAIN_NAME_COST,
+            block.timestamp,
+            block.timestamp + DOMAIN_EXPIRATION_DATE
+        );
 
         // calculate the receipt hash/key
         bytes32 receiptKey = getReceiptKey(domain, topLevel);
@@ -211,7 +221,11 @@ contract NameRegisteringService is Ownable {
         domainNames[domainHash].expires += 365 days;
 
         // create a receipt entity
-        Receipt memory newReceipt = Receipt(DOMAIN_NAME_COST, block.timestamp, block.timestamp + DOMAIN_EXPIRATION_DATE);
+        Receipt memory newReceipt = Receipt(
+            DOMAIN_NAME_COST,
+            block.timestamp,
+            block.timestamp + DOMAIN_EXPIRATION_DATE
+        );
 
         // calculate the receipt key for this domain
         bytes32 receiptKey = getReceiptKey(domain, topLevel);

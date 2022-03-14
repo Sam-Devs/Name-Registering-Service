@@ -16,41 +16,76 @@ Anyone can  apply for a domain name, the owner checks if the name is available, 
 
 
 
-DESIGN
-struct - contaiins the name, ip address
-object of a struct
-mapping
-balance(this) / msg.sender
-Typecasting - turning sring to bytes
-forerunning preventive measures - a check that while this the transaction is ongoing, no other function can happen
-bool - unlocked / a check
-onchain call - by the msg.sender(contract owner)
-payable address- function
-modifier
-balance
-anyone that calls is the owner of the contract 
-mappings
-function - registername (name)
+## DESIGN
+# Structs
+- DomainDetails structure has the following properties:
+    - bytes name — the domain name stored as bytes
+    - bytes12 topLevel — the TLD of the domain
+    - address owner — address of the owner
+    - bytes15 ip — IP that is related to the domain name
+    - uint expires — expiring date of the domain.
 
-block.timestamp
-time lock
-check
+- Receipt structure has the following properties:
+    - uint amountPaidWei — the price that was paid in this transaction, stored as the amount of wei (the smallest part of ether
+    - uint timestamp — the time when this receipt was issued
+    - uint expires — expiring time
+
+# Modifiers
+    - isAvailable modifier checks whether a certain domain name is available to be bought.
+    - collectDomainNamePayments modifier is used as the way for faster check if the user provided the right amount of money for the payment.
+    - isDomainOwner modifier checks whether the transaction initiator (msg.sender) is the owner of the certain domain.
+    - isDomainOwner modifier checks whether the transaction initiator (msg.sender) is the owner of the certain domain.
+    - isDomainNameLengthAllowed modifier checks if the length of domain name is allowed.
+    - isTopLevelLengthAllowed modifier checks if the length of the provided TLD is allowed.
+
+# Constants
+    - 
 
 
-This project runs a smart contract made in Solidity which allows users to:
-- claim Domain Names
-- Set a Domain Name's corresponding IP address
-- Read a Domain Name's corresponding IP address
-- Retrieve a list of user's owned Domain Names
-- Transfer ownership of Domain Names to other users for free
-- Offer ownership of Domain Names for specified price
-  - Publicly (transfer ownership to any address in exchange for funds)
-  - Privately (transfer ownership to specific address in exchange for funds)
-- Accept offers of Domain Names (Payable)
-  - Public
-  - Private
 
-A web page front end allows users to interact with the smart contract (Currently a work in progress)
+# Events
+
+
+
+# Functions
+    - function register(bytes memory domain, bytes12 topLevel, bytes15 ip)
+        - function description - To register domain name
+        - param - domain - Domain name to be registered
+        - param - topLevel - Domain top level (TLD)
+        - param - ip - The ip of the host
+
+    - function renewDomainName( bytes memory domain, bytes12 topLevel)
+        - function description - To extend domain expiration date
+        - param - domain - Domain name to be registered
+        - param - topLevel - top level
+
+    - function renewDomainName( bytes memory domain, bytes12 topLevel)
+        - function description - To edit domain name
+        - param - domain - Domain name to be edited
+        - param - topLevel - tld of the domain
+        - param - newIp - the new ip for the domain
+
+    - function transferDomain(bytes memory domain, bytes12 topLevel, address newOwner) 
+        - function description - Transfer domain ownership
+        - param - domain - name of the domain
+        - param - topLevel - tld of the domain
+        - param - newOwner - address of the new owner
+
+    - function getIP(bytes memory domain, bytes12 topLevel)
+        - function description - Get ip of domain
+        - param - domain - name of the domain
+        - param - topLevel - tld of the domain
+
+    - function getReceiptList() public view returns (bytes32[] memory)
+        - function description - Get IP of the provided domain
+    
+    - function getReceipt(bytes32 receiptKey) public view returns (uint, uint, uint)
+        - function description - Get single receipt
+        - param - topLevel - tld of the domain
+
+    - function withdraw()
+        - function description - To be able to withdraw the ETH (funds) collected from domain registration/renewal payments.
+    
 
 ## How to set it up
 
