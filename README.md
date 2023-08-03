@@ -1,6 +1,6 @@
 # Name-Registering-Service
 
-## SCENARIO - ENS System
+## Scenario - ENS System
 Anyone can  apply for a domain name, the owner checks if the name is available, if it is, the applicant pays a fee and the the domain ownership shifts to him, there is an expiry timestamp, if the user doesnt renew by then, the name expires and he loses ownership.
 
 ## ARCHITECTURE
@@ -37,15 +37,6 @@ Anyone can  apply for a domain name, the owner checks if the name is available, 
     - isDomainOwner modifier checks whether the transaction initiator (msg.sender) is the owner of the certain domain.
     - isDomainNameLengthAllowed modifier checks if the length of domain name is allowed.
     - isTopLevelLengthAllowed modifier checks if the length of the provided TLD is allowed.
-
-# Constants
-    - 
-
-
-
-# Events
-
-
 
 # Functions
     - function register(bytes memory domain, bytes12 topLevel, bytes15 ip)
