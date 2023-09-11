@@ -14,8 +14,6 @@ Anyone can  apply for a domain name, the owner checks if the name is available, 
 - A malicious node should not be able to frontrun the process by censoring transactions of an honest user and registering the name in its own account
 
 
-
-
 ## DESIGN
 # Structs
 - DomainDetails structure has the following properties:
@@ -78,7 +76,7 @@ Anyone can  apply for a domain name, the owner checks if the name is available, 
         - function description - To be able to withdraw the ETH (funds) collected from domain registration/renewal payments.
     
 
-## How to set it up
+## Set up
 
 ### Install Truffle
 
